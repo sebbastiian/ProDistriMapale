@@ -1,0 +1,8 @@
+.espacioingresar{
+    margin-bottom: 10px;
+}
+
+.displayheader{
+    display: flex;
+    align-items: center;
+}
