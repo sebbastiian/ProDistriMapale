@@ -9,5 +9,5 @@ class Tipos extends Model
 {
     use HasFactory;
     protected $primaryKey ='idtipo';
-    protected $fillable = ['nombre'];
+    protected $fillable = ['idtipo','nombre'];
 }
