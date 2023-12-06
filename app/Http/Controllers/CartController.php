@@ -27,7 +27,6 @@ class CartController extends Controller
             ["imagen"=>$productos->imagen]
         );
 
-
         return redirect()->back()->with("success","Producto agregado!: ". $productos->descripcion);
     }
 
