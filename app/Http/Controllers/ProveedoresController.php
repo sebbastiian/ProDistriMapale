@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Tipos;
+use App\Models\Proveedores;
+use DB;
 
-class TiposController extends Controller
+class ProveedoresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +14,9 @@ class TiposController extends Controller
     public function index()
     {
         //
-        $tipos = Tipos::orderBy('nombre', 'ASC')->get();
+        $proveedores = Proveedores::orderBy('nombre', 'ASC')->get();
         //return $marcas;
-        return view('administrador/inventario', ['tipos'=>$tipos]);
+        return view('administrador/proveedores', ['proveedores'=>$proveedores]);
     }
 
     /**
@@ -24,7 +25,7 @@ class TiposController extends Controller
     public function create()
     {
         //
-        return view('administrador/tipos/create');
+        return view('administrador/proveedor/create');
     }
 
     /**
@@ -33,8 +34,15 @@ class TiposController extends Controller
     public function store(Request $request)
     {
         //
-        Tipos::create(['nombre' =>request('nombre')]);
-        return redirect()->route('administrador.inventario');
+        $proveedores = $request->validate([
+            'nombre' => 'required',
+            'email' => 'required',
+            'telefono' => 'required'
+        ]);
+    
+        Proveedores::create($proveedores);
+    
+        return redirect()->route('administrador.proveedores');
     }
 
     /**
@@ -51,8 +59,8 @@ class TiposController extends Controller
     public function edit(string $id)
     {
         //
-        $tipos = Tipos::findOrFail($id);
-        return view('administrador.tipos.edit',['tipos'=>$tipos]);
+        $proveedores = Proveedores::findOrFail($id);
+        return view('administrador.proveedor.edit',['proveedores'=>$proveedores]);
     }
 
     /**
@@ -61,10 +69,10 @@ class TiposController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $tipos = Tipos::findOrFail($id);
-        $tipos->update($request->all());
-        $tipos->save();
-        return redirect()->route('administrador.inventario');
+        $proveedores = Proveedores::findOrFail($id);
+        $proveedores->update($request->all());
+        $proveedores->save();
+        return redirect()->route('administrador.proveedores');
     }
 
     /**
@@ -73,8 +81,5 @@ class TiposController extends Controller
     public function destroy(string $id)
     {
         //
-        $tipos = Tipos::findOrFail($id);
-        $tipos->delete();
-        return redirect()->route('administrador.inventario');
     }
 }

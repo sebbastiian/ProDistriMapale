@@ -81,3 +81,11 @@
         padding: 0;
     }
 }
+@media (min-width: 300px){
+    .navadmin{
+        display: flex;
+        background-color: var(--color-barra-lateral);
+        flex-direction: column;
+        align-items: center;
+    }
+    }

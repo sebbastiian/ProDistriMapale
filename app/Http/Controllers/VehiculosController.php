@@ -25,6 +25,7 @@ class VehiculosController extends Controller
     public function create()
     {
         //
+        return view('administrador/vehiculos/create');
     }
 
     /**
@@ -32,7 +33,16 @@ class VehiculosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vehiculos = $request->validate([
+            'marca' => 'required',
+            'modelo' => 'required',
+            'placa' => 'required',
+            'estado' => 'required',
+        ]);
+    
+        Vehiculos::create($vehiculos);
+    
+        return redirect()->route('administrador.vehiculos');
     }
 
     /**
@@ -49,6 +59,8 @@ class VehiculosController extends Controller
     public function edit(string $id)
     {
         //
+        $vehiculos = Vehiculos::findOrFail($id);
+        return view('administrador.vehiculos.edit',['vehiculos'=>$vehiculos]);
     }
 
     /**
@@ -57,6 +69,10 @@ class VehiculosController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $vehiculos = Vehiculos::findOrFail($id);
+        $vehiculos->update($request->all());
+        $vehiculos->save();
+        return redirect()->route('administrador.vehiculos');
     }
 
     /**

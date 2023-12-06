@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar</title>
+    <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
 </head>
@@ -21,42 +21,21 @@
                     <span style="margin-top: 3%;" >DistriMapale</span>
                 </div>
             </div>
-            <button class="boton">
-                <ion-icon name="add-outline"></ion-icon>
-                <span>Crear nuevo</span>
-            </button>
+            <a class="creanuv" href="{{route('administrador.index')}}">
+                <button class="boton">
+                    <ion-icon name="add-outline"></ion-icon>
+                    <span>Crear nuevo</span>
+                </button>
+            </a>
+
         </div>
 
         <nav class="navegacion">
             <ul>
                 <li>
-                    <a id="inbox" href="{{route('administrador.index')}}">
-                        <ion-icon name="clipboard-outline"></ion-icon>
-                        <span>Tablas</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{{route('administrador.inventario')}}">
                         <ion-icon name="folder-outline"></ion-icon>
                         <span>Inventario</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('administrador.clientes')}}">
-                        <ion-icon name="people-outline"></ion-icon>
-                        <span>Clientes</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('administrador.transportadores')}}">
-                        <ion-icon name="man-outline"></ion-icon>
-                        <span>Empleados</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('administrador.vehiculos')}}">
-                        <ion-icon name="car-sport-outline"></ion-icon>
-                        <span>Vehículos</span>
                     </a>
                 </li>
                 <li>
@@ -66,15 +45,45 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a id="inbox" href="{{route('administrador.facturas')}}">
                         <ion-icon name="cash-outline"></ion-icon>
                         <span>Ventas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <ion-icon name="calculator-outline"></ion-icon>
+                    <a href="{{-- {{route('administrador.contabilidad')}} --}}">
+                        <ion-icon name="bar-chart-outline"></ion-icon>
                         <span>Contabilidad</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('administrador.proveedores')}}">
+                        <ion-icon name="bag-handle-outline"></ion-icon>
+                        <span>Proveedores</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{-- {{route('administrador.pedidos')}} --}}">
+                        <ion-icon name="bag-add-outline"></ion-icon>
+                        <span>Pedidos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('administrador.transportadores')}}">
+                        <ion-icon name="man-outline"></ion-icon>
+                        <span>Empleados </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('administrador.vehiculos')}}">
+                        <ion-icon name="car-sport-outline"></ion-icon>
+                        <span>Vehículos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('administrador.clientes')}}">
+                        <ion-icon name="people-outline"></ion-icon>
+                        <span>Clientes</span>
                     </a>
                 </li>
             </ul>
@@ -84,18 +93,12 @@
             <div class="linea"></div>
 
             <div class="modo-oscuro">
-                <div class="info">
-                    <ion-icon name="moon-outline"></ion-icon>
-                    <span>Drak Mode</span>
-                </div>
+                
                 <div class="switch">
-                    <div class="base">
-                        <div class="circulo">
-                            
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
+
     
             <div class="usuario">
                 <x-dropdown-link href="{{ route('profile.show') }}">
@@ -104,16 +107,15 @@
                 
                 <div class="info-usuario">
                     <div class="nombre-email">
-                        <h1 class="nombre"> {{ Auth::user()->name }} {{ Auth::user()->apellido }}</h1>
+                        <span class="nombre"> {{ Auth::user()->name }} {{ Auth::user()->apellido }}</span>
                         
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
 
-                            <x-dropdown-link href="{{ route('logout') }}"
-                                     @click.prevent="$root.submit();">
-                                {{ __('Salir') }}
-                                <ion-icon name="log-in-outline"></ion-icon>
-                            </x-dropdown-link>
+                            <button class="ver-mas" href="{{ route('logout') }}"
+                                   @click.prevent="$root.submit();">
+                              {{ __('Salir') }}
+                            </button>
                         </form>
                         
                     </div>

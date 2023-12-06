@@ -70,13 +70,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.transportadores')}}">
+                    <a id="inbox" href="{{route('administrador.transportadores')}}">
                         <ion-icon name="man-outline"></ion-icon>
                         <span>Empleados </span>
                     </a>
                 </li>
                 <li>
-                    <a id="inbox" href="{{route('administrador.vehiculos')}}">
+                    <a href="{{route('administrador.vehiculos')}}">
                         <ion-icon name="car-sport-outline"></ion-icon>
                         <span>Vehículos</span>
                     </a>
@@ -128,77 +128,129 @@
     <main>
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h1>Nuevo Vehículo</h1>
-            </div>
-        </div>
+                <h1>Nuevo Transportador</h1>
+            </div>   
+        </div> 
         <div class="color">
             <div class="container">
                 <div class="titulof">
                     <h2>Datos de registro</h2>
                 </div>
                 
-                <form action="{{route('vehiculos.store')}}" method="POST" enctype="multipart/form-data" class="formulario-vehiculo">
+
+                <form method="POST" {{-- id="miFormulario" --}} action="{{ route('transportador.store') }}" class="form-container">
                     @csrf
-                    <div class="form-group">
-                        <label for="marca">Marca</label>
-                        <input type="text" name="marca" id="marca" class="form-control">
+                     <!-- Nombre -->
+                    <div>
+                        <label for="name">Nombre</label>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
                     </div>
-                    <div class="form-group">
-                        <label for="modelo">Modelo</label>
-                        <input type="text" name="modelo" id="modelo" class="form-control">
+            
+                    <!-- Apellido -->
+                    <div>
+                        <label for="apellido">Apellido</label>
+                        <input id="apellido" type="text" name="apellido" value="{{ old('apellido') }}" required autofocus autocomplete="apellido">
                     </div>
-                    <div class="form-group">
-                        <label for="placa">Placa</label>
-                        <input type="text" name="placa" id="placa" class="form-control" oninput="formatPlaca(this)" onkeyup="formatPlaca(this)" placeholder="XXX ###">
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">Estado</label>
-                        <select name="estado" id="estado" class="form-control">
-                            <option value="Activo">Activo</option>
-                            <option value="Reparación">Reparación</option>
+            
+                    <!-- Tipo Documento -->
+                    <div>
+                        <label for="tipodocumento">Tipo de Documento</label>
+                        <select id="tipodocumento" name="tipodocumento" value="{{ old('tipodocumento') }}" required autofocus autocomplete="tipodocumento">
+                            <option>CC</option>
+                            <option>CE</option>
+                            <option>RC</option>
+                            <option>PA</option>
+                            <option>PPT</option>
                         </select>
+                        <x-input-error for="tipodocumento" class="mt-2" />
                     </div>
-                    <div class="form-group" id="crear">
-                        <button type="submit" class="btn-crear-vehiculo">Crear</button>
+            
+                    <!-- Documento -->
+                    <div>
+                        <label for="documento">Documento</label>
+                        <input id="documento" type="text" name="documento" value="{{ old('documento') }}" required autofocus autocomplete="documento">
+                    </div>
+            
+                    <!-- Sueldo -->
+                    <div>
+                        <label for="sueldo">Sueldo</label>
+                        <input id="sueldo" type="text" name="sueldo" value="{{ old('sueldo', 0) }}" oninput="formatSueldo(this)" required autofocus autocomplete="sueldo">
+                    </div>
+            
+                    <!-- Email -->
+                    <div>
+                        <label for="email">Email</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username">
+                    </div>
+            
+                    <!-- Dirección -->
+                    <div>
+                        <label for="direccion">Dirección</label>
+                        <input id="direccion" type="text" name="direccion" value="{{ old('direccion') }}" required autofocus autocomplete="direccion">
+                    </div>
+            
+                    <!-- Teléfono -->
+                    <div>
+                        <label for="telefono">Teléfono</label>
+                        <input id="telefono" type="text" name="telefono" value="{{ old('telefono') }}" required autofocus autocomplete="telefono">
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password" required autocomplete="new-password">
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+
+                    <!-- Roles ID -->
+                    <div class="mt-4">
+                        {{-- <x-label for="roles_id" value="{{ __('Role') }}" /> --}}
+                        <input type="hidden" id="roles_id" name="roles_id" value="3">
+                        <x-input-error for="roles_id" class="mt-2" />
+                    </div>
+
+                    <!-- Estado -->
+                    <div>
+                        {{-- <label for="estado">Estado</label> --}}
+                        <input type="hidden" id="estado" name="estado" value="Activo" required autofocus autocomplete="estado">
+                        <x-input-error for="estado" class="mt-2" />
+                    </div>
+
+                    <div id="crear">
+                        <button type="submit">Crear</button>
                     </div>
                 </form>
             </div>
+            
         </div>
     </main>
-    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/js/sidebar.js"></script>
-    <script>
-        function formatPlaca(input) {
-            let placaValue = input.value;
+{{--     <script>
+        function formatSueldo(input) {
+            // Elimina cualquier carácter que no sea un dígito
+            let cleanedValue = input.value.replace(/\D/g, '');
 
-            // Elimina caracteres no deseados (deja solo letras y números)
-            placaValue = placaValue.replace(/[^a-zA-Z0-9]/g, '');
-
-            // Limita la longitud a 6 caracteres
-            placaValue = placaValue.substring(0, 6);
-
-            // Inserta un espacio después de las primeras 3 letras
-            if (placaValue.length > 3) {
-                placaValue = placaValue.substring(0, 3) + ' ' + placaValue.substring(3);
-            }
-
-            // Convierte a mayúsculas
-            placaValue = placaValue.toUpperCase();
-
-            // Aplica la validación específica (3 letras, espacio o guion, 3 números)
-            if (/^[A-Z]{3}[-\s][0-9]{3}$/.test(placaValue)) {
-                input.setCustomValidity('');  // La entrada es válida
-            } else {
-                input.setCustomValidity('Formato de placa incorrecto');  // La entrada es inválida
-            }
+            // Formatea el valor con comas para mejor legibilidad
+            let formattedValue = Number(cleanedValue).toLocaleString();
 
             // Establece el valor formateado de nuevo en el campo
-            input.value = placaValue;
+            input.value = formattedValue;
         }
-    </script>
 
+        // Antes de enviar el formulario, elimina el formato para que sea un número entero
+        document.getElementById('miFormulario').addEventListener('submit', function(event) {
+            let sueldoInput = document.getElementById('sueldo');
+            let cleanedValue = sueldoInput.value.replace(/\D/g, '');
+            sueldoInput.value = cleanedValue;
+        });
+    </script> --}}
 </body>
 </html>
