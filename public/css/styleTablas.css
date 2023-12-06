@@ -1,16 +1,33 @@
+/* Agrega estilos para el botón de cerrar en la esquina superior derecha */
+.cerrar-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  padding: 5px;
+}
+
 .botoned{
-  color:#000000;
+  color: #21618C ;
   padding: 3%;
   border-radius: 4px;
   text-decoration: none;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+  background-color: #ffffff4a;
+  font-weight: 500;
 }
 .botonel{
-  color:#000000;
+  color: #D10024;
   padding: 3%;
   border-radius: 4px;
   text-decoration: none;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+  background-color: #ffffff4a ;
+  font-weight: 500;
 }
 .botonel:hover{
   background-color: #D10024;
@@ -19,9 +36,10 @@
   transition: transform 0.3s ease; 
 }
 .botoned:hover{
-  background-color: #0288D1;
+  background-color: #21618C ;
   color: #fff;
-  transform: translateX(10px);
+  transform: scale(1.1);
+  transition: transform 0.3s ease; 
 }
 .containert{
   width: 90%;
@@ -52,19 +70,17 @@ td{
 }
 
 .tablee thead th{
-  background-color: #15161D;
-  color: #fff;
   border-bottom: 4px solid #D10024;
 }
 .tablee tbody td{
   border-bottom: #adadad solid 1px;
 }
 .tablee tbody tr:hover{
-  background-color: rgba(255, 255, 255, 0.729);
+  background-color: rgba(206, 206, 206, 0.729);
 }
 
 .tablee tbody td:hover{
-  background-color: rgba(255, 255, 255, 0.245);
+  background-color: rgba(255, 255, 255, 0.566);
 }
 
 @media screen and (max-width: 800px){

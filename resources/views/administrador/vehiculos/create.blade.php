@@ -6,7 +6,7 @@
     <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="/css/formCrear.css">
 </head>
 <body>
     <div class="menu">
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{-- {{route('administrador.pedidos')}} --}}">
+                    <a href="{{route('administrador.pedidos')}}">
                         <ion-icon name="bag-add-outline"></ion-icon>
                         <span>Pedidos</span>
                     </a>
@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.vehiculos')}}">
+                    <a id="inbox" href="{{route('administrador.vehiculos')}}">
                         <ion-icon name="car-sport-outline"></ion-icon>
                         <span>Vehículos</span>
                     </a>
@@ -112,7 +112,6 @@
                         
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
-
                             <button class="ver-mas" href="{{ route('logout') }}"
                                      @click.prevent="$root.submit();">
                                 {{ __('Salir') }}
@@ -126,77 +125,80 @@
 
     </div>
 
-
     <main>
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h2>Crear nuevo</h2>
+                <h1>Nuevo Vehículo</h1>
             </div>
         </div>
         <div class="color">
-            <div class="caja-crear">
-                <a href="{{ route('vehiculos.create') }}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo vehiculo</span>
-                    </button>
-                </a>                    
-            </div>
-            <div class="caja-crear">
-                <a href="{{ route('transportador.create') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo transportador</span>
-                    </button>
-                </a>
-                <a href="{{ route('transportador.createa') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo administrador</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('proveedores.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo proveedor</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('programaciones.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Asignar una nueva programacion</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('productos.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo producto</span>
-                    </button>
-                </a>
-                <a href="{{route('marcas.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear una nueva marca</span>
-                    </button>
-                </a>
-                <a href="{{route('tipos.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo tipo</span>
-                    </button>
-                </a>
+            <div class="container">
+                <div class="titulof">
+                    <h2>Datos de registro</h2>
+                </div>
+                
+                <form action="{{route('vehiculos.store')}}" method="POST" enctype="multipart/form-data" class="formulario-vehiculo">
+                    @csrf
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <input type="text" name="marca" id="marca" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" name="modelo" id="modelo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Placa</label>
+                        <input type="text" name="placa" id="placa" class="form-control" oninput="formatPlaca(this)" onkeyup="formatPlaca(this)" placeholder="XXX ###">
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select name="estado" id="estado" class="form-control">
+                            <option value="Activo">Activo</option>
+                            <option value="Reparación">Reparación</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="crear">
+                        <button type="submit" class="btn-crear-vehiculo">Crear</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
+    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/js/sidebar.js"></script>
+    <script>
+        function formatPlaca(input) {
+            let placaValue = input.value;
+
+            // Elimina caracteres no deseados (deja solo letras y números)
+            placaValue = placaValue.replace(/[^a-zA-Z0-9]/g, '');
+
+            // Limita la longitud a 6 caracteres
+            placaValue = placaValue.substring(0, 6);
+
+            // Inserta un espacio después de las primeras 3 letras
+            if (placaValue.length > 3) {
+                placaValue = placaValue.substring(0, 3) + ' ' + placaValue.substring(3);
+            }
+
+            // Convierte a mayúsculas
+            placaValue = placaValue.toUpperCase();
+
+            // Aplica la validación específica (3 letras, espacio o guion, 3 números)
+            if (/^[A-Z]{3}[-\s][0-9]{3}$/.test(placaValue)) {
+                input.setCustomValidity('');  // La entrada es válida
+            } else {
+                input.setCustomValidity('Formato de placa incorrecto');  // La entrada es inválida
+            }
+
+            // Establece el valor formateado de nuevo en el campo
+            input.value = placaValue;
+        }
+    </script>
+
 </body>
 </html>

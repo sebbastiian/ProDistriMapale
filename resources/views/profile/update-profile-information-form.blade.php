@@ -113,11 +113,18 @@
                 <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="name" />
                 <x-input-error for="name" class="mt-2" />
             </div>
+            
+            <!-- Apellido -->
+            <div class="col-span-6 sm:col-span-4">
+                <x-label for="apellido" value="{{ __('Apellido') }}" />
+                <x-input id="apellido" type="text" class="mt-1 block w-full" wire:model="state.apellido" required />
+                <x-input-error for="apellido" class="mt-2" />
+            </div>
     
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="email" value="{{ __('Correo electrónico') }}" />
-                <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" required autocomplete="username" />
+                <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" required autocomplete="username" readonly/>
                 <x-input-error for="email" class="mt-2" />
     
                 @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
@@ -135,12 +142,6 @@
                         </p>
                     @endif
                 @endif
-            </div>
-            <!-- Apellido -->
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="apellido" value="{{ __('Apellido') }}" />
-                <x-input id="apellido" type="text" class="mt-1 block w-full" wire:model="state.apellido" required />
-                <x-input-error for="apellido" class="mt-2" />
             </div>
     
             <!-- Telefono -->
@@ -160,14 +161,14 @@
             <!-- Documento -->
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="documento" value="{{ __('Documento') }}" />
-                <x-input id="documento" type="text" class="mt-1 block w-full" wire:model="state.documento" required />
+                <x-input id="documento" type="text" class="mt-1 block w-full" wire:model="state.documento" required readonly/>
                 <x-input-error for="documento" class="mt-2" />
             </div>
     
             <!-- Tipo Documento -->
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="tipodocumento" value="{{ __('Tipo de Documento') }}" />
-                <x-input id="tipodocumento" type="text" class="mt-1 block w-full" wire:model="state.tipodocumento" required />
+                <x-input id="tipodocumento" type="text" class="mt-1 block w-full" wire:model="state.tipodocumento" required readonly/>
                 <x-input-error for="tipodocumento" class="mt-2" />
             </div>
     

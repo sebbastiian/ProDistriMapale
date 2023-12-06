@@ -6,7 +6,6 @@
     <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
 <body>
     <div class="menu">
@@ -40,7 +39,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.programaciones')}}">
+                    <a id="inbox" href="{{route('administrador.programaciones')}}">
                         <ion-icon name="calendar-outline"></ion-icon>
                         <span>Cronograma</span>
                     </a>
@@ -112,7 +111,6 @@
                         
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
-
                             <button class="ver-mas" href="{{ route('logout') }}"
                                      @click.prevent="$root.submit();">
                                 {{ __('Salir') }}
@@ -128,70 +126,48 @@
 
 
     <main>
+
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h2>Crear nuevo</h2>
+                <h1>Editar Productos</h1>
             </div>
         </div>
         <div class="color">
-            <div class="caja-crear">
-                <a href="{{ route('vehiculos.create') }}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo vehiculo</span>
-                    </button>
-                </a>                    
-            </div>
-            <div class="caja-crear">
-                <a href="{{ route('transportador.create') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo transportador</span>
-                    </button>
-                </a>
-                <a href="{{ route('transportador.createa') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo administrador</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('proveedores.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo proveedor</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('programaciones.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Asignar una nueva programacion</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('productos.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo producto</span>
-                    </button>
-                </a>
-                <a href="{{route('marcas.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear una nueva marca</span>
-                    </button>
-                </a>
-                <a href="{{route('tipos.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo tipo</span>
-                    </button>
-                </a>
-            </div>
+            <form action="{{ route('programaciones.update', $programaciones) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                    <div>
+                        <label>Fecha:</label>
+                        <input type="date" name="fecha" id="fecha" value="{{$programaciones->fecha}}" readonly>
+                    </div>
+                    <div>
+                        <label for="vehiculo">Vehiculos:</label>
+                        <select class="form-control" name="vehiculo" id="vehiculo" aria-label="Default select example" disabled>
+                            @forelse ($vehiculos as $vehiculo)
+                            <option value="{{ $vehiculo->idvehiculo }}"  {{ $vehiculo->idvehiculo == $programaciones->idvehiculo ? 'selected' : '' }}>{{ $vehiculo->nombre }} </option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="trasnportadores">Transportadores</label>
+                        <select class="form-control" name="trasnportadores" id="trasnportadores" aria-label="Default select example" disabled>
+                            @forelse ($users as $user)
+                            <option value="{{ $user->id }}"  {{ $user->id == $programaciones->idtrasnportadores ? 'selected' : '' }}>{{ $user->nombrecompleto }} </option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Observaciones:</label>
+                        <input type="text" name="observaciones" id="observaciones" value="{{$programaciones->observaciones}}">
+                    </div>
+
+                    <button type="submit">Actualizar</button>
+
+            </form>
         </div>
     </main>
 

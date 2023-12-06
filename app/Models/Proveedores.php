@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tipos extends Model
+class Proveedores extends Model
 {
     use HasFactory;
-    protected $primaryKey ='idtipo';
-    protected $fillable = ['idtipo','nombre'];
+    protected $fillable = ['idproveedor','nombre','email','telefono',];
+    protected $primaryKey ='idproveedor';
 }
+

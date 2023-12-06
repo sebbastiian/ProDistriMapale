@@ -6,7 +6,6 @@
     <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
 <body>
     <div class="menu">
@@ -40,7 +39,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.programaciones')}}">
+                    <a id="inbox" href="{{route('administrador.programaciones')}}">
                         <ion-icon name="calendar-outline"></ion-icon>
                         <span>Cronograma</span>
                     </a>
@@ -112,7 +111,6 @@
                         
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
-
                             <button class="ver-mas" href="{{ route('logout') }}"
                                      @click.prevent="$root.submit();">
                                 {{ __('Salir') }}
@@ -126,71 +124,61 @@
 
     </div>
 
-
     <main>
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h2>Crear nuevo</h2>
+                <h1>Nueva Asignación</h1>
             </div>
         </div>
         <div class="color">
-            <div class="caja-crear">
-                <a href="{{ route('vehiculos.create') }}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo vehiculo</span>
-                    </button>
-                </a>                    
+            <div class="container">
+                <div class="titulof">
+                    <h2>Datos de registro</h2>
+                </div>
+                @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
-            <div class="caja-crear">
-                <a href="{{ route('transportador.create') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo transportador</span>
-                    </button>
-                </a>
-                <a href="{{ route('transportador.createa') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo administrador</span>
-                    </button>
-                </a>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
             </div>
-            <div class="caja-crear">
-                <a href="{{route('proveedores.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo proveedor</span>
-                    </button>
-                </a>
+        @endif
+        <form action="{{ route('programaciones.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div>
+                <label for="idvehiculo">Vehiculo</label>
+                <select name="idvehiculo" id="idvehiculo" class="form-control">
+                    @foreach($vehiculos as $vehiculo)
+                        <option value="{{ $vehiculo->idvehiculo }}">{{ $vehiculo->nombre }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="caja-crear">
-                <a href="{{route('programaciones.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Asignar una nueva programacion</span>
-                    </button>
-                </a>
+
+            <div>
+                <label for="id">Transportador</label>
+                <select name="id" id="id" class="form-control">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->nombrecompleto }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="caja-crear">
-                <a href="{{route('productos.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo producto</span>
-                    </button>
-                </a>
-                <a href="{{route('marcas.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear una nueva marca</span>
-                    </button>
-                </a>
-                <a href="{{route('tipos.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo tipo</span>
-                    </button>
-                </a>
+
+            <div>
+                <label for="fecha">Fecha</label>
+                <input type="date" name="fecha" id="fecha">
+            </div>
+
+            <div>
+                <label for="observaciones">Observaciones</label>
+                <input type="text" name="observaciones" id="observaciones">
+            </div>
+
+            <button type="submit">Guardar</button>
+        </form>
+
             </div>
         </div>
     </main>

@@ -6,7 +6,7 @@
     <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="\css\formCrear.css">
 </head>
 <body>
     <div class="menu">
@@ -58,13 +58,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.proveedores')}}">
+                    <a id="inbox" href="{{route('administrador.proveedores')}}">
                         <ion-icon name="bag-handle-outline"></ion-icon>
                         <span>Proveedores</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{-- {{route('administrador.pedidos')}} --}}">
+                    <a href="{{route('administrador.pedidos')}}">
                         <ion-icon name="bag-add-outline"></ion-icon>
                         <span>Pedidos</span>
                     </a>
@@ -112,7 +112,6 @@
                         
                         <form method="POST" action="{{ route('logout') }}" x-data>
                             @csrf
-
                             <button class="ver-mas" href="{{ route('logout') }}"
                                      @click.prevent="$root.submit();">
                                 {{ __('Salir') }}
@@ -126,73 +125,41 @@
 
     </div>
 
-
     <main>
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h2>Crear nuevo</h2>
+                <h1>Editar Proveedor</h1>
             </div>
         </div>
         <div class="color">
-            <div class="caja-crear">
-                <a href="{{ route('vehiculos.create') }}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo vehiculo</span>
-                    </button>
-                </a>                    
+            <div class="container">
+                <form action="{{ route('proveedores.update', $proveedores->idproveedor) }}" method="POST" enctype="multipart/form-data" class="form-container">
+                    @csrf
+                    @method('PUT')
+                    <div class="mt-4">
+                        <label for="nombre" class="block font-bold mb-2">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" value="{{ $proveedores->nombre }}" class="block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+            
+                    <div class="mt-4">
+                        <label for="email" class="block font-bold mb-2">Correo</label>
+                        <input type="text" name="email" id="email" value="{{ $proveedores->email }}" class="block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+            
+                    <div class="mt-4">
+                        <label for="telefono" class="block font-bold mb-2">Teléfono</label>
+                        <input type="text" name="telefono" id="telefono" value="{{ $proveedores->telefono }}" class="block w-full p-2 border border-gray-300 rounded-md">
+                    </div>
+            
+                    <div class="form-group mt-4">
+                        <label for="" style="color: white">.</label>
+                        <div class="form-group" id="crear">
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="caja-crear">
-                <a href="{{ route('transportador.create') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo transportador</span>
-                    </button>
-                </a>
-                <a href="{{ route('transportador.createa') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo administrador</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('proveedores.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo proveedor</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('programaciones.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Asignar una nueva programacion</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('productos.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo producto</span>
-                    </button>
-                </a>
-                <a href="{{route('marcas.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear una nueva marca</span>
-                    </button>
-                </a>
-                <a href="{{route('tipos.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo tipo</span>
-                    </button>
-                </a>
-            </div>
-        </div>
+        </div>  
     </main>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

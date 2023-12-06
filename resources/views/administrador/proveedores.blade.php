@@ -6,8 +6,13 @@
     <title>DistriMapale</title>
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/styleTablas.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="\css\navegacionadmin.css">
+    <link rel="stylesheet" href="/css/tarjetas.css">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+    
 </head>
+
 <body>
     <div class="menu">
         <ion-icon name="menu-outline"></ion-icon>
@@ -58,13 +63,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('administrador.proveedores')}}">
+                    <a id="inbox" href="{{route('administrador.proveedores')}}">
                         <ion-icon name="bag-handle-outline"></ion-icon>
                         <span>Proveedores</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{-- {{route('administrador.pedidos')}} --}}">
+                    <a href="{{route('administrador.pedidos')}}">
                         <ion-icon name="bag-add-outline"></ion-icon>
                         <span>Pedidos</span>
                     </a>
@@ -130,73 +135,76 @@
     <main>
         <div class="navegacion-admin">
             <div class="tittlee">
-                <h2>Crear nuevo</h2>
+                <h2>Proveedores</h2>
+                <div class="search-bar">
+                    <input class="inputsrch" type="text" id="searchInput" placeholder="Buscar proveedores...">
+                    <button class="search-botn" onclick="buscarProveedores()">Buscar</button>
+                </div>
             </div>
         </div>
+    
         <div class="color">
-            <div class="caja-crear">
-                <a href="{{ route('vehiculos.create') }}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo vehiculo</span>
-                    </button>
-                </a>                    
+            <div class="titabl">
+                <h2>Distribuidores</h2>
+    
+                <div class="caja-crear">
+                    <a href="{{route('proveedores.create')}}">
+                        <button class="boton">
+                            <ion-icon name="add-outline"></ion-icon>
+                            <span>Crear nuevo</span>
+                        </button>
+                    </a>
+                </div>
             </div>
-            <div class="caja-crear">
-                <a href="{{ route('transportador.create') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo transportador</span>
-                    </button>
-                </a>
-                <a href="{{ route('transportador.createa') }}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo administrador</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('proveedores.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo proveedor</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('programaciones.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Asignar una nueva programacion</span>
-                    </button>
-                </a>
-            </div>
-            <div class="caja-crear">
-                <a href="{{route('productos.create')}}">
-                    <button class="boton" >
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo producto</span>
-                    </button>
-                </a>
-                <a href="{{route('marcas.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear una nueva marca</span>
-                    </button>
-                </a>
-                <a href="{{route('tipos.create')}}">
-                    <button class="boton">
-                        <ion-icon name="add-outline"></ion-icon>
-                        <span>Crear un nuevo tipo</span>
-                    </button>
-                </a>
+            <div class="tabla-tipos">
+                <div class="card-container">
+                    @foreach ($proveedores as $proveedor)
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>{{ $proveedor->nombre }}</h3>
+                                <h6>{{ $proveedor->email }}</h6>
+                                <h6>{{ $proveedor->telefono }}</h6>
+                                <div class="botonc">
+                                    <a class="botoned" href="{{ route('administrador.proveedor.edit', $proveedor->idproveedor) }}">
+                                        Editar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </main>
+    
+    <script>
+        function buscarProveedores() {
+            var input, filter, cards, card, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            cards = document.querySelectorAll('.card');
+    
+            cards.forEach(function(card) {
+                var cardText = card.innerText.toUpperCase();
+    
+                if (cardText.includes(filter)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-U7I2H4Hq38DFSTruMD5IeFYI6I5SiS9O3M5MT5zPjFEL1W5lEwRg10JLx2wnjOrM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIMB/RG2gCW" crossorigin="anonymous"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/js/sidebar.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </body>
 </html>

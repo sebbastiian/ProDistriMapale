@@ -21,10 +21,11 @@ class ProductosController extends Controller
         ->join('tipos', 'productos.idtipo', '=', 'tipos.idtipo')
         ->join('marcas', 'productos.idmarca', '=', 'marcas.idmarca')
         ->select('productos.idproducto','productos.descripcion','productos.cantidad','productos.contneto','productos.unidadxempaque','productos.disponibilidad','productos.valor','productos.imagen','tipos.idtipo','tipos.nombre as nametipo','marcas.idmarca','marcas.nombre as namemarca')
-        ->orderby('productos.descripcion','ASC')->get();
+        ->orderby('productos.descripcion','ASC')
+        ->paginate(7);
         $tipos = Tipos::orderBy('nombre', 'ASC')->get();
         $marcas = Marcas::orderBy('nombre', 'ASC')->get();
-  
+
         return view('administrador/inventario', ['productos'=>$productos, 'tipos'=>$tipos, 'marcas'=>$marcas]);
     }
 
