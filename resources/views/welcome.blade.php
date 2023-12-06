@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Bienvendio a DistriMapale</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -62,6 +62,7 @@
         </div>
     @endif
     </body> --}}
+    
     <body class="antialiased">
         
         <!-- HEADER -->

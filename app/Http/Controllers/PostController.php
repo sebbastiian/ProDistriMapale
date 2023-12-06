@@ -14,31 +14,37 @@ class PostController extends Controller
 
 public function like():JsonResponse{
         
-    $productos = productos::find(request()->id);
+    $productos = Productos::find(request()->id);
 
     if($productos->isLikedByLoggedInUser()){
         //dislike
         $result = Like::where([
-            'iduser' => auth()->user()->id,
+            'user_id' => auth()->user()->id,
             'productos_idproducto' => request()->id
         ])->delete();
         return response()->json([
-            'count' =>productos::find(request()->id)->likes->count(),
+            'count' =>Productos::find(request()->id)->likes->count(),
             'color' => 'text-dark'
         ], 200);
 
     }else{
         //like
         $like = new Like();
-        $like->iduser = auth()->user()->id;
+        $like->user_id = auth()->user()->id;
         $like->productos_idproducto = request()->id;
         $like->save();
         return response()->json([
-            'count' =>productos::find(request()->id)->likes->count(),
+            'count' =>Productos::find(request()->id)->likes->count(),
             'color' => 'text-danger'
         ], 200);
     }
 
+}
+
+public function likeList(){
+
+    return view('likeList');
+    
 }
 
 }

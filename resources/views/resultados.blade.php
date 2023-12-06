@@ -46,7 +46,6 @@
  		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
  		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  		<![endif]-->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -95,19 +94,17 @@
                         </div>
                         <!-- /LOGO -->
 
-                        <!-- SEARCH BAR -->
-
-                        <div class="col-md-6">
-                                <form class="header-searchh" action="{{ route('buscar') }}" method="get">
-                                    @csrf
-                                    <input class="inputsrch" type="text" name="query" placeholder="Busca aquí">
-                                    <button type="submit" class="search-botn"><i class="fa fa-search"></i> Buscar</button>
-                                </form>
-                        </div>
+                       <!-- SEARCH BAR -->
                         
+                       <div class="col-md-6">
+                          <form class="header-searchh" action="{{ route('buscar') }}" method="get">
+                              @csrf
+                              <input class="inputsrch" type="text" name="query" placeholder="Busca aquí">
+                              <button type="submit" class="search-botn"><i class="fa fa-search"></i> Buscar</button>
+                          </form>
+                       </div>
 
-                        
-                        <!-- /SEARCH BAR -->
+                    <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
                         <div class="col-md-4 clearfix">
@@ -123,7 +120,7 @@
 
                                 <!-- Wishlist -->
                                 <div class="dropdown">
-                                    <a  data-toggle="dropdown" aria-expanded="true"  href="/likeList">
+                                    <a  data-toggle="dropdown" aria-expanded="true"  href="likeList">
                                         <i class="fa fa-heart-o"></i>
                                         <span>Favoritos</span>
                                         <div class="qty">
@@ -248,11 +245,37 @@
 									</label>
 								</div>
 
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-6">
+									<label for="category-6">
+										<span></span>
+										Smartphones
+										<small>(740)</small>
+									</label>
+								</div>
 							</div>
 						</div>
 						<!-- /aside Widget -->
 
-						
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Price</h3>
+							<div class="price-filter">
+								<div id="price-slider"></div>
+								<div class="input-number price-min">
+									<input id="price-min" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+								<span>-</span>
+								<div class="input-number price-max">
+									<input id="price-max" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
 
 						<!-- aside Widget -->
 						<div class="aside">
@@ -262,7 +285,7 @@
 									<input type="checkbox" id="brand-1">
 									<label for="brand-1">
 										<span></span>
-										Agua
+										SAMSUNG
 										<small>(578)</small>
 									</label>
 								</div>
@@ -270,7 +293,7 @@
 									<input type="checkbox" id="brand-2">
 									<label for="brand-2">
 										<span></span>
-										Agua con gas
+										LG
 										<small>(125)</small>
 									</label>
 								</div>
@@ -278,7 +301,7 @@
 									<input type="checkbox" id="brand-3">
 									<label for="brand-3">
 										<span></span>
-										Agua con gas saborizada
+										SONY
 										<small>(755)</small>
 									</label>
 								</div>
@@ -286,7 +309,7 @@
 									<input type="checkbox" id="brand-4">
 									<label for="brand-4">
 										<span></span>
-										Aguardiente
+										SAMSUNG
 										<small>(578)</small>
 									</label>
 								</div>
@@ -294,7 +317,7 @@
 									<input type="checkbox" id="brand-5">
 									<label for="brand-5">
 										<span></span>
-										Cerveza
+										LG
 										<small>(125)</small>
 									</label>
 								</div>
@@ -302,31 +325,7 @@
 									<input type="checkbox" id="brand-6">
 									<label for="brand-6">
 										<span></span>
-										Gaseosa
-										<small>(755)</small>
-									</label>
-								</div>
-                                <div class="input-checkbox">
-									<input type="checkbox" id="brand-6">
-									<label for="brand-6">
-										<span></span>
-										Ron
-										<small>(755)</small>
-									</label>
-								</div>
-                                <div class="input-checkbox">
-									<input type="checkbox" id="brand-6">
-									<label for="brand-6">
-										<span></span>
-										Vodka
-										<small>(755)</small>
-									</label>
-								</div>
-                                <div class="input-checkbox">
-									<input type="checkbox" id="brand-6">
-									<label for="brand-6">
-										<span></span>
-										Whisky
+										SONY
 										<small>(755)</small>
 									</label>
 								</div>
@@ -370,81 +369,51 @@
 				<!-- container -->
 				<div class="container">
 					<!-- row -->
-					<div class="row" id="filtered-products"> 
+					<div class="row"> 
 					     <div class="col-md-12">
 					     	<div class="section-title">
-					     		<h3 class="title">TODOS NUESTROS PRODUCTOS</h3>
+					     		<h3 class="title">Resultados de la búsqueda</h3>
 					     	</div>
 					     </div>
-					     @section('content')
-					     <div class="container">
-					     	<div class="row justify-content-center">
-					     		@include('front.partials.msg')
-					     		@forelse($productos as $fila)
-					     		<div class="col-md-4 col-xs-6">
-					     			<div class="product">
-					     				<div class="product-img">
-					     					@if ($fila->imagen)
-					     					<img src="img/{{$fila->imagen}}" alt="imagen">
-					     					@else
-					     					<p>Sin Imagen</p>
-					     					@endif
-					     					<div class="product-label">
-					     					</div>
-					     				</div>
-					     				<div class="product-body">
-					     					<p class="product-category">{{$fila->idtipo}}</p>
-                                            <p class="product-category">{{$fila->idmarca}}</p>
-					     					<h3 class="product-name">
-					     						<a href="/blog/{{$fila->idproducto}}">{{$fila->descripcion}}</a>
-					     					</h3>
-					     					<h4 class="product-price">COP{{$fila->valor}}</h4>
-					     					<!-- Aquí puedes agregar más detalles del producto si es necesario -->
-					     					<div class="product-rating">
-					     						<!-- Puedes mostrar la calificación del producto si tienes esa información -->
-					     						<div class="product-rating">
-					     							<i class="fa fa-star"></i>
-					     							<i class="fa fa-star"></i>
-					     							<i class="fa fa-star"></i>
-					     							<i class="fa fa-star"></i>
-					     							<i class="fa fa-star"></i>
-					     						</div>
-					     					</div>
-					     					<div class="product-btns">
-					     						<form action="{{route('add')}}" method="post">
-					     							@csrf
-					     							<input type="hidden" name="idproducto" value="{{$fila->idproducto}}">
-					     							<button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> AGREGAR</button>
-					     						</form>
-					     						<!-- Puedes agregar un botón de "Agregar a favoritos" si es necesario -->
-					     						<div class="post product-btns" id="{{$fila->idproducto}}">
-					     						@auth 
-					     						<div class="product-btns" id="{{$fila->idproducto}}">
-					     								<button class="add-to-wishlist">
-					     									<span class="{{$fila->likes->contains("user_id",auth()->id()) ? 'text-danger':'text-dark' }}" id="heart{{$fila->idproducto}}">
-					     										<i class="fa fa-heart-o">
-					     										</i>
-					     									</span>   
-					     								</button>                    
-					     						</div> 
-					     						@else
-					     						<a href="/login" class="text-dark text-decoration-none">
-					     							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-					     								<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-					     							</svg>
-					     						</a>  
-					     						@endauth  
-					     						<p class="d-inline" id="count{{$fila->idproducto}}"> Likes {{$fila->likes->count()}}</p>                                                                          
-					     						</div>
-					     					</div>
-					     				</div>
-					     			</div>
-					     		</div>
-					     		@empty
-					     		<p>No hay productos disponibles.</p>
-					     		@endforelse
-					     	</div>
-					    </div>
+                         @section('content')
+                         <div class="container">
+                             <div class="row justify-content-center">
+                                 @forelse($resultados as $resultado)
+                                     <div class="col-md-4 col-xs-6">
+                                         <div class="product">
+                                             <div class="product-img">
+                                                 @if ($resultado->imagen)
+                                                     <img src="img/{{$resultado->imagen}}" alt="imagen">
+                                                 @else
+                                                     <p>Sin Imagen</p>
+                                                 @endif
+                                                 <div class="product-label"></div>
+                                             </div>
+                                             <div class="product-body">
+                                                 <p class="product-category">{{$resultado->idtipo}}</p>
+                                                 <h3 class="product-name">
+                                                     <a href="/blog/{{$resultado->idproducto}}">{{$resultado->descripcion}}</a>
+                                                 </h3>
+                                                 <h4 class="product-price">COP{{$resultado->valor}}</h4>
+                                                 <!-- Otros detalles del producto si es necesario -->
+                                                 <div class="product-rating">
+                                                     <div class="product-rating">
+                                                         <i class="fa fa-star"></i>
+                                                         <i class="fa fa-star"></i>
+                                                         <i class="fa fa-star"></i>
+                                                         <i class="fa fa-star"></i>
+                                                         <i class="fa fa-star"></i>
+                                                     </div>
+                                                 </div>
+                                                 <!-- Botones o acciones adicionales si es necesario -->
+                                             </div>
+                                         </div>
+                                     </div>
+                                 @empty
+                                     <p>No se encontraron resultados.</p>
+                                 @endforelse
+                             </div>
+                         </div>
 		    		</div>
 		    		<!-- /row -->
 		    	</div>
@@ -483,56 +452,6 @@
                     })        
                 });
             </script>
-
-                     <!-- filtrado de productos -->
-                     
-                     <script>
-                        $(document).ready(function() {
-                            console.log('Script jQuery cargado correctamente');
-                    
-                            // Manejar cambios en los filtros
-                            $('.input-checkbox, .price-filter').change(function() {
-                                updateProducts();
-                            });
-                    
-                            // Función para actualizar los productos
-                            function updateProducts() {
-                                // Obtener valores de los filtros seleccionados
-                                var brands = $('.input-checkbox input:checked').map(function() {
-                                    return $(this).val();
-                                }).get();
-                    
-                                var types = $('.checkbox-filter input:checked').map(function() {
-                                    return $(this).val();
-                                }).get();
-                    
-                                var minPrice = $('#price-min').val();
-                                var maxPrice = $('#price-max').val();
-                    
-                                // Realizar solicitud AJAX para obtener productos filtrados
-                                $.ajax({
-                                    url: '{{ route("filtrar.productos") }}',
-                                    method: 'GET',
-                                    data: {
-                                        marcas: brands,
-                                        tipos: types,
-                                        minPrice: minPrice,
-                                        maxPrice: maxPrice,
-                                        // Puedes agregar más parámetros según sea necesario
-                                    },
-                                    success: function(response) {
-                                        // Actualizar la sección de productos con la respuesta
-                                        $('#filtered-products').html(response);
-                                    },
-                                    error: function(error) {
-                                        console.error('Error al obtener productos filtrados', error);
-                                    }
-                                });
-                            }
-                        });
-                    </script>
-                    
-
 						<!-- /Productos -->
 				
 						<!-- /store products -->

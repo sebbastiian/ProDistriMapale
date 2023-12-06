@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tu Carrito</title>
+    <title>Tus Favoritos</title>
 
     
         <!-- Fonts -->
@@ -79,17 +79,17 @@
                         </div>
                         <!-- /LOGO -->
 
-                         <!-- SEARCH BAR -->
-                        
-                         <div class="col-md-6">
+                        <!-- SEARCH BAR -->
+
+                        <div class="col-md-6">
                             <form class="header-searchh" action="{{ route('buscar') }}" method="get">
                                 @csrf
                                 <input class="inputsrch" type="text" name="query" placeholder="Busca aquí">
                                 <button type="submit" class="search-botn"><i class="fa fa-search"></i> Buscar</button>
                             </form>
-                         </div>
+                        </div>
 
-                         <!-- /SEARCH BAR -->
+                        <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
                         <div class="col-md-4 clearfix">
@@ -105,18 +105,21 @@
 
                                 <!-- Wishlist -->
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"  href="/likeList">
+                                    <a  data-toggle="dropdown" aria-expanded="true"  href="/likeList">
                                         <i class="fa fa-heart-o"></i>
                                         <span>Favoritos</span>
+                                        <div class="qty">
+                                        <span>{{auth()->user()->likes()->count()}}</span>
+                                        </div>
                                     </a>
                                 </div>
                                 <!-- /Wishlist -->
 
                                 <!-- Cart -->
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="{{route('chekout')}}">
+                                    <a  data-toggle="dropdown" aria-expanded="true" href="{{route('chekout')}}">
                                         <i class="fa fa-shopping-cart"></i>
-                                        Carrito 
+                                        <span>Carrito </span>
                                         <div class="qty">
                                             <span class="">
                                                 {{\Cart::count()}}
@@ -168,120 +171,40 @@
         </nav>
         <!-- /NAVIGATION -->
 
-        <!-- SECTION -->
 
-        <!-- productos -->
+
+		<!-- Like List -->
 
         <div class="section">
-            <!-- Order Details -->
             <div class="col-md-12 order-details">
                 <div class="section-title text-center">
-                    <h3 class="title">Tu Pedido</h3>
+                    <h3 class="title">Tus Favoritos</h3>
                 </div>
-        
-                {{-- <div class="user-details">
-                    <h4>Datos del Usuario</h4>
-                    <p>Nombre: {{ $user->name }}</p>
-                    <p>Apellido: {{ $user->apellido }}</p>
-                    <p>Nombretienda: {{ $user->nombretienda }}</p>
-                    <p>Email: {{ $user->email }}</p>
-                    <p>Dirección: {{ $user->direccion }}</p>
-                    <p>Teléfono: {{ $user->telefono }}</p>
-                </div> --}}
-        
+
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="card">
-                            <div class="card-body">
-                                @include("front.partials.msg")
-                                @if (Cart::count())
-                                <form id="facturaForm" action="{{ route('facturas.store') }}" method="post">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>IMG</th>
-                                            <th>ID</th>
-                                            <th>NOMBRE</th>
-                                            <th>CANTIDAD</th>
-                                            <th>PRECIO UNITARIO</th>
-                                            <th>IMPORTE</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (Cart::content() as $fila)
-                                            <tr class="align-middle">
-                                                <td><img src="/img/{{$fila->options->imagen}}" width="50"></td>
-                                                <td>{{$fila->id}}</td>
-                                                <td>{{$fila->name}}</td>
-                                                <td>
-                                                    <div class="btn-group btn-group-sm" role="group">
-                                                        <a href="/decreaseQuantity/{{$fila->rowId}}" class="btn btn-success">-</a>
-                                                        <button type="button" class="btn">{{$fila->qty}}</button>
-                                                        <a href="/increaseQuantity/{{$fila->rowId}}" class="btn btn-success">+</a>
-
-                                                    </div>
-                                                </td>
-                                                <td>{{number_format($fila->price,2)}}</td>
-                                                <td>{{number_format($fila->qty * $fila->price)}}</td>
-                                                <td>
-                                                    <a href="/removeitem/{{$fila->rowId}}" class="btn btn-danger">Eliminar</a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                            <tr class="fw-bolder">
-                                                <td colspan="4"></td>
-                                                <td class="text-end">subtotal</td>
-                                                <td class="text-end">{{Cart::subtotal()}}</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="fw-bolder">
-                                                <td colspan="4"></td>
-                                                <td class="text-end">tax</td>
-                                                <td class="text-end">{{Cart::tax()}}</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr class="fw-bolder">
-                                                <td colspan="4"></td>
-                                                <td class="text-end">total</td>
-                                                <td class="text-end">{{Cart::total()}}</td>
-                                                <td></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="row justify-content-center mt-5 mb-5 text-center">
-                                            <div class="col-sm-4">
-                                                <a href="{{route("clear")}}" class="btn btn-outline-danger">Vaciar Carrito</a>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                               @auth
-                                               <a href="{{route("confirmarcarrito")}}" class="btn btn-outline-danger ">Ordenar Ahora</a>
-                                               @else 
-                                               <a href="/login">Entrar para Ordenar</a>
-                                               @endauth 
-                                            </div>
-                                        </div> 
-                                    </form>
-                                    @else
-                                        <p>Tu carrito esta vacio</p>
-                                        <a href="{{route("dashboard")}}" class="text-center">¡Agrega un Producto!</a>
-                                    @endif
+                        <div class="col-sm-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        @forelse (auth()->user()->likes as $like)
+                                        <li class="list-group-item">
+                                            {{$loop->iteration}} - <a href="/blog/{{$like->productos->idproducto}}" class="text-decoration none">{{$like->productos->descripcion}}</a>
+                                        </li>
+                                        @empty
+                                        <li class="list-group-item">No hay productos en tus likes</li>
+                                        @endforelse
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <!-- /Productos -->
-            <!-- /Order Details -->
             </div>
-            <!-- /row -->
         </div>
-
-        <!-- productos -->
-        
-        <!-- /SECTION -->
-
-
-        
-
+             
+        <!-- Like List -->
+       
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -291,11 +214,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="newsletter">
-                            <p>Recibir <strong>NOVEDADES</strong></p>
-                            <form>
-                                <input class="input" type="email" placeholder="Ingresa tu correo">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Suscribirse</button>
-                            </form>
+
                             <ul class="newsletter-follow">
                                 <li>
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -410,12 +329,12 @@
         <!-- /FOOTER -->
         @endrole
         <!-- jQuery Plugins -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/slick.min.js"></script>
-        <script src="js/nouislider.min.js"></script>
-        <script src="js/jquery.zoom.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/slick.min.js"></script>
+        <script src="../js/nouislider.min.js"></script>
+        <script src="../js/jquery.zoom.min.js"></script>
+        <script src="../js/main.js"></script>
 
     
 
