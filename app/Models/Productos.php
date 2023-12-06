@@ -17,6 +17,6 @@ class Productos extends Model
     }
 
     public function isLikedByLoggedInUser(){
-        return $this->likes->where('iduser',auth()->user()->id)->isEmpty() ? false : true ;
+        return $this->likes->where('user_id',auth()->user()->id)->isEmpty() ? false : true ;
     }
 }

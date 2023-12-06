@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Tu Carrito</title>
 
     
         <!-- Fonts -->
@@ -23,6 +23,7 @@
  		<!-- Bootstrap -->
  		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+<<<<<<< HEAD
  		<!-- Slick -->
  		<link type="text/css" rel="stylesheet" href="css/slick.css"/>
  		<link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -40,6 +41,26 @@
         <link rel="stylesheet" href="css/infotop.css">
         <link rel="stylesheet" href="css/searchbar.css">
         <link rel="stylesheet" href="css/admindashboard.css">
+=======
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="../css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="../css/slick-theme.css"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="../css/nouislider.min.css"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="../css/font-awesome.min.css">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="../css/style.css"/>
+
+        {{-- MY CUSTOM --}}
+        <link rel="stylesheet" href="../css/infotop.css">
+        <link rel="stylesheet" href="../css/searchbar.css">
+        <link rel="stylesheet" href="../css/admindashboard.css">
+>>>>>>> d832f56bcf76cccc074e875c887eb92f4c40bc93
  		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
  		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
  		<!--[if lt IE 9]>
@@ -50,6 +71,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     @role('administrador')
     <div class="bodyadmin">
         <div class="divadmin">
@@ -65,6 +87,8 @@
         </div>
     </div>
     @endrole
+=======
+>>>>>>> d832f56bcf76cccc074e875c887eb92f4c40bc93
 
     @role('cliente')
     {{-- @livewire('navigation-menu') --}}
@@ -93,6 +117,7 @@
                         </div>
                         <!-- /LOGO -->
 
+<<<<<<< HEAD
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-searchh">
@@ -102,6 +127,19 @@
                             </div>
                         </div>
                         <!-- /SEARCH BAR -->
+=======
+                         <!-- SEARCH BAR -->
+                        
+                         <div class="col-md-6">
+                            <form class="header-searchh" action="{{ route('buscar') }}" method="get">
+                                @csrf
+                                <input class="inputsrch" type="text" name="query" placeholder="Busca aquí">
+                                <button type="submit" class="search-botn"><i class="fa fa-search"></i> Buscar</button>
+                            </form>
+                         </div>
+
+                         <!-- /SEARCH BAR -->
+>>>>>>> d832f56bcf76cccc074e875c887eb92f4c40bc93
 
                         <!-- ACCOUNT -->
                         <div class="col-md-4 clearfix">
@@ -117,6 +155,7 @@
 
                                 <!-- Wishlist -->
                                 <div class="dropdown">
+<<<<<<< HEAD
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-heart-o"></i>
                                         <span>Favoritos</span>
@@ -155,6 +194,12 @@
                                             <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                         </div>
                                     </div>
+=======
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"  href="/likeList">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>Favoritos</span>
+                                    </a>
+>>>>>>> d832f56bcf76cccc074e875c887eb92f4c40bc93
                                 </div>
                                 <!-- /Wishlist -->
 
@@ -215,6 +260,7 @@
         <!-- /NAVIGATION -->
 
         <!-- SECTION -->
+<<<<<<< HEAD
         <div class="section">
             <!-- container -->
             <div class="container">
@@ -724,6 +770,122 @@
         </div>
         <!-- /SECTION -->
 
+=======
+
+        <!-- productos -->
+
+        <div class="section">
+            <!-- Order Details -->
+            <div class="col-md-12 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">Tu Pedido</h3>
+                </div>
+        
+                {{-- <div class="user-details">
+                    <h4>Datos del Usuario</h4>
+                    <p>Nombre: {{ $user->name }}</p>
+                    <p>Apellido: {{ $user->apellido }}</p>
+                    <p>Nombretienda: {{ $user->nombretienda }}</p>
+                    <p>Email: {{ $user->email }}</p>
+                    <p>Dirección: {{ $user->direccion }}</p>
+                    <p>Teléfono: {{ $user->telefono }}</p>
+                </div> --}}
+        
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="card">
+                            <div class="card-body">
+                                @include("front.partials.msg")
+                                @if (Cart::count())
+                                <form id="facturaForm" action="{{ route('facturas.store') }}" method="post">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>IMG</th>
+                                            <th>ID</th>
+                                            <th>NOMBRE</th>
+                                            <th>CANTIDAD</th>
+                                            <th>PRECIO UNITARIO</th>
+                                            <th>IMPORTE</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Cart::content() as $fila)
+                                            <tr class="align-middle">
+                                                <td><img src="/img/{{$fila->options->imagen}}" width="50"></td>
+                                                <td>{{$fila->id}}</td>
+                                                <td>{{$fila->name}}</td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <a href="/decreaseQuantity/{{$fila->rowId}}" class="btn btn-success">-</a>
+                                                        <button type="button" class="btn">{{$fila->qty}}</button>
+                                                        <a href="/increaseQuantity/{{$fila->rowId}}" class="btn btn-success">+</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>{{number_format($fila->price,2)}}</td>
+                                                <td>{{number_format($fila->qty * $fila->price)}}</td>
+                                                <td>
+                                                    <a href="/removeitem/{{$fila->rowId}}" class="btn btn-danger">Eliminar</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            <tr class="fw-bolder">
+                                                <td colspan="4"></td>
+                                                <td class="text-end">subtotal</td>
+                                                <td class="text-end">{{Cart::subtotal()}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="fw-bolder">
+                                                <td colspan="4"></td>
+                                                <td class="text-end">tax</td>
+                                                <td class="text-end">{{Cart::tax()}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="fw-bolder">
+                                                <td colspan="4"></td>
+                                                <td class="text-end">total</td>
+                                                <td class="text-end">{{Cart::total()}}</td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="row justify-content-center mt-5 mb-5 text-center">
+                                            <div class="col-sm-4">
+                                                <a href="{{route("clear")}}" class="btn btn-outline-danger">Vaciar Carrito</a>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                               @auth
+                                               <a href="{{route("confirmarcarrito")}}" class="btn btn-outline-danger ">Ordenar Ahora</a>
+                                               @else 
+                                               <a href="/login">Entrar para Ordenar</a>
+                                               @endauth 
+                                            </div>
+                                        </div> 
+                                    </form>
+                                    @else
+                                        <p>Tu carrito esta vacio</p>
+                                        <a href="{{route("dashboard")}}" class="text-center">¡Agrega un Producto!</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- /Productos -->
+            <!-- /Order Details -->
+            </div>
+            <!-- /row -->
+        </div>
+
+        <!-- productos -->
+        
+        <!-- /SECTION -->
+
+
+        
+
+
+>>>>>>> d832f56bcf76cccc074e875c887eb92f4c40bc93
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
             <!-- container -->
